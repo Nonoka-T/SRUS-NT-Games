@@ -90,6 +90,23 @@ class PlayerList:
             current_node = current_node.next
         return False
 
+    def display(self, forward=True):
+        """
+        Print out every player in the list.
+        :param forward: print from head to tail when True, tail to head when False.
+        """
+        if forward:
+            current_node = self._head
+        else:
+            current_node = self._tail
+
+        while current_node is not None:
+            print(current_node.player)
+            if forward:
+                current_node = current_node.next
+            else:
+                current_node = current_node.previous
+
     @property
     def head(self):
         """Return the current node of the list."""
