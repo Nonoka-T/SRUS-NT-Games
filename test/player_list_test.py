@@ -12,6 +12,7 @@ class PlayerListTest(unittest.TestCase):
         self.player_list = PlayerList()
         self.player1 = Player("1", "Nonoka Takahashi")
         self.player2 = Player("2", "Edwin Tosen")
+        self.player3 = Player("3", "Cameron Hendrikse")
 
     def test_add_to_head_when_list_empty(self):
         """The new node should become the head of empty list."""
@@ -65,6 +66,29 @@ class PlayerListTest(unittest.TestCase):
     def test_remove_from_head_when_list_is_empty(self):
         """remove from an empty list should return None"""
         self.assertIsNone(self.player_list.remove_from_head())
+
+    def test_remove_by_key_in_the_middle(self):
+        """node with the key is taken out of list"""
+        self.player_list.add_to_tail(self.player1)
+        self.player_list.add_to_tail(self.player2)
+        self.player_list.add_to_tail(self.player3)
+
+        result = self.player_list.remove_by_key("2")
+
+        self.assertTrue(result)
+        self.assertEqual(self.player1, self.player_list.head.player)
+        self.assertEqual(self.player3, self.player_list.head.next.player)
+        self.assertEqual(self.player3, self.player_list.tail.player)
+
+    def test_remove_by_key_with_unknown_key(self):
+        """Nothing is removed when the key is not in the list"""
+        self.player_list.add_to_tail(self.player1)
+
+        result = self.player_list.remove_by_key("5")
+
+        self.assertFalse(result)
+        self.assertEqual(self.player1, self.player_list.head.player)
+
 
 
 if __name__ == "__main__":

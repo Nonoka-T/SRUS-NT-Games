@@ -69,6 +69,26 @@ class PlayerList:
             removed_node.previous = None
         return removed_node.player
 
+    def remove_by_key(self, key):
+        """
+        remove the first node with key. Return True when node was removed, otherwise return False.
+        :param key: the uid of player to remove
+        """
+        current_node = self._head
+        while current_node is not None:
+            if current_node.key == key:
+                if current_node is self._head:
+                    self.remove_from_head()
+                elif current_node is self._tail:
+                    self.remove_from_tail()
+                else:
+                    current_node.previous.next = current_node.next
+                    current_node.next.previous = current_node.previous
+                    current_node.previous = None
+                    current_node.next = None
+                return True
+            current_node = current_node.next
+        return False
 
     @property
     def head(self):
