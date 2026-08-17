@@ -27,6 +27,19 @@ class PlayerList:
             self._head.previous = new_node
             self._head = new_node
 
+    def add_to_tail(self, player):
+        """Insert a new node with the given player at the tail of list"""
+        new_node = PlayerNode(player)
+        if self.is_empty():
+            self._tail = new_node
+            self._head = new_node
+
+        else:
+            new_node.previous = self._tail
+            self._tail.next = new_node
+            self._tail = new_node
+
+
     @property
     def head(self):
         """Return the current node of the list."""

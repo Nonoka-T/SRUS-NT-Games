@@ -22,7 +22,7 @@ class PlayerListTest(unittest.TestCase):
         self.assertEqual(self.player_list.head, self.player_list.tail)
 
     def test_add_to_head_when_list_is_not_empty(self):
-        """The new node should become the head and link to old head"""
+        """new node should become the head and link to old head"""
         self.player_list.add_to_head(self.player1)
         self.player_list.add_to_head(self.player2)
 
@@ -30,6 +30,15 @@ class PlayerListTest(unittest.TestCase):
         self.assertEqual(self.player1, self.player_list.head.next.player)
         self.assertEqual(self.player_list.head, self.player_list.head.next.previous)
         self.assertEqual(self.player1, self.player_list.tail.player)
+
+    def test_add_to_tail(self):
+        """new node should become the tail nd link to the old tail"""
+        self.player_list.add_to_tail(self.player1)
+        self.player_list.add_to_tail(self.player2)
+
+        self.assertEqual(self.player1, self.player_list.head.player)
+        self.assertEqual(self.player2, self.player_list.tail.player)
+        self.assertEqual(self.player_list.head, self.player_list.tail.previous)
 
 
 if __name__ == "__main__":
