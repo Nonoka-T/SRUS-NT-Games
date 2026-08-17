@@ -40,6 +40,32 @@ class PlayerListTest(unittest.TestCase):
         self.assertEqual(self.player2, self.player_list.tail.player)
         self.assertEqual(self.player_list.head, self.player_list.tail.previous)
 
+    def test_remove_from_head(self):
+        """The first node is removed and player is returned."""
+        self.player_list.add_to_tail(self.player1)
+        self.player_list.add_to_tail(self.player2)
+
+        removed_player = self.player_list.remove_from_head()
+
+        self.assertEqual(self.player1, removed_player)
+        self.assertEqual(self.player2, self.player_list.head.player)
+        self.assertIsNone(self.player_list.head.previous)
+
+    def test_remove_from_tail(self):
+        """the last node is removed and player is returned."""
+        self.player_list.add_to_tail(self.player1)
+        self.player_list.add_to_tail(self.player2)
+
+        removed_player = self.player_list.remove_from_tail()
+
+        self.assertEqual(self.player2, removed_player)
+        self.assertEqual(self.player1, self.player_list.tail.player)
+        self.assertIsNone(self.player_list.tail.next)
+
+    def test_remove_from_head_when_list_is_empty(self):
+        """remove from an empty list should return None"""
+        self.assertIsNone(self.player_list.remove_from_head())
+
 
 if __name__ == "__main__":
     unittest.main()
