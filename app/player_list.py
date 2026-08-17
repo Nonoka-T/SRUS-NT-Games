@@ -10,6 +10,7 @@ class PlayerList:
     def __init__(self):
         """Create an empty list."""
         self._head = None
+        self._tail = None
 
     def is_empty(self):
         """Return True when the list doesn't contain any node."""
@@ -20,6 +21,7 @@ class PlayerList:
         new_node = PlayerNode(player)
         if self.is_empty():
             self._head = new_node
+            self._tail = new_node
         else:
             new_node.next = self._head
             self._head.previous = new_node
@@ -29,3 +31,8 @@ class PlayerList:
     def head(self):
         """Return the current node of the list."""
         return self._head
+
+    @property
+    def tail(self):
+        """Return the last node of the list."""
+        return self._tail
