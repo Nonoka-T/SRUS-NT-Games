@@ -89,6 +89,14 @@ class PlayerHashMap:
                 current_node = current_node.next
         return total
 
+    def display(self):
+        """print the index and players of each PlayerList not empty"""
+        for index in range(self.SIZE):
+            player_list = self._hashmap[index]
+            if not player_list.is_empty():
+                print(f"Index: {index}")
+                player_list.display()
+
     @property
     def hashmap(self):
         """return the list of PlayerList object"""
