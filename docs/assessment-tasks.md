@@ -98,6 +98,20 @@ What was the outcome of running the above unit test, copy paste the output **for
 
 ```text
 Copy the traceback you got when you ran the test here.
+(.venv) (base) MacBook-Pro-5:SRUS-NT-Games nonokatakahashi$ python3 -m unittest test.player_test.PlayerTest.test_sort_players
+E
+======================================================================
+ERROR: test_sort_players (test.player_test.PlayerTest.test_sort_players)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nonokatakahashi/PycharmProjects/SRUS-NT-Games/test/player_test.py", line 25, in test_sort_players                                                                                                        
+    sorted_players = sorted(players)
+TypeError: '<' not supported between instances of 'Player' and 'Player'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
 ```
 
 ### 4.3. Success criteria
