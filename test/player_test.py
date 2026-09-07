@@ -29,6 +29,13 @@ class PlayerTest(unittest.TestCase):
 
         self.assertListEqual(sorted_players, manually_sorted_players)
 
+    def test_players_can_be_compared_by_score(self):
+        alice = Player(player_id='01', player_name="Alice", score=10)
+        bob = Player(player_id='02', player_name="Bob", score=5)
+
+        self.assertGreater(alice, bob)
+
+
 
 if __name__ == "__main__":
     unittest.main()

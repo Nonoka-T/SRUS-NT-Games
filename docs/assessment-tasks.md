@@ -116,9 +116,9 @@ FAILED (errors=1)
 
 ### 4.3. Success criteria
 
-- [ ] Unit test added to `test_player.py`
-- [ ] Unit test output provided
-- [ ] Unit test output reflects the error in `sorted(players)` (if you are getting another error read the instructions CAREFULLY)
+- [x] Unit test added to `test_player.py`
+- [x] Unit test output provided
+- [x] Unit test output reflects the error in `sorted(players)` (if you are getting another error read the instructions CAREFULLY)
 
 #### 4.3.1. Question: What dunder method is required for Python to sort players?
 
@@ -129,7 +129,8 @@ What is the **only** magic method that must be implemented in the player class f
 **Hint:** if you don't recall this from class, the error message you got when you ran the test will help you.
 -------
 > Answer Here
-> Yes, here - instead of this text!
+> the error message said < is not supported between instance of Player and Player which shows that sorted compares the 
+> items with <. I think __lt__ is the method python call for that operator.
 -------
 #### 4.3.2. Task: Implement the magic method in the Player class
 
@@ -151,6 +152,24 @@ Run the test and confirm that your error resembles the previous error
 
 ```text
 INSERT ERROR OUTPUT HERE
+(.venv) (base) MacBook-Pro-5:SRUS-NT-Games nonokatakahashi$ python3 -m unittest test.player_test.PlayerTest.test_players_can_be_compared_by_score
+E
+======================================================================
+ERROR: test_players_can_be_compared_by_score (test.player_test.PlayerTest.test_players_can_be_compared_by_score)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nonokatakahashi/PycharmProjects/SRUS-NT-Games/test/player_test.py", line 36, in test_players_can_be_compared_by_score                                                                                              
+    self.assertGreater(alice, bob)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 1298, in assertGreater                                                                                                          
+    if not a > b:
+           ^^^^^
+TypeError: '>' not supported between instances of 'Player' and 'Player'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
 ```
 
 - Implement the appropriate magic method in the Player class and ensure you pass this test
@@ -172,13 +191,40 @@ Rerun `test_sort_players` does the test pass? If not, include the output below:
 
 ```text
 Your output here
+(.venv) (base) MacBook-Pro-5:SRUS-NT-Games nonokatakahashi$ python3 -m unittest test.player_test.PlayerTest.test_sort_players
+F
+======================================================================
+FAIL: test_sort_players (test.player_test.PlayerTest.test_sort_players)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nonokatakahashi/PycharmProjects/SRUS-NT-Games/test/player_test.py", line 30, in test_sort_players
+    self.assertListEqual(sorted_players, manually_sorted_players)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [Play[60 chars]d='01', score=10), Player (name='Charlie', uid='03', score=15)] != [Play[60 chars]d='01', score=10), Player (name='Charlie', uid='03', score=15)]                                    
+                                                                                                                 
+First differing element 0:                                                                                       
+Player (name='Bob', uid='02', score=5)                                                                           
+Player (name='Bob', uid='02', score=5)                                                                           
+                                                                                                                 
+  [Player (name='Bob', uid='02', score=5),                                                                       
+   Player (name='Alice', uid='01', score=10),                                                                    
+   Player (name='Charlie', uid='03', score=15)]                                                                  
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)
 ```
 
 ##### 4.3.4.1 Question: why did the equality comparison fail?
 Why did the test fail (note: if it doesn't fail, it means there is something you have already done before you were asked to do so - if that's the case, you need to figure out what that is!)?
 -------
 > Answer here
->
+> Sorting output shows the players in score order 5, 10, 15.
+> Failure comes from assertListEqual which compares the elements with ==.
+> Player has no __eq__ so Python falls back to checking if two names point to the same object.
+> two lists are built from separate instances so == returns False even though the values match.
+
 -------
 Add the necessary code to the Player class to ensure that the `test_sort_players` test passes.
 

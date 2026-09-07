@@ -43,6 +43,14 @@ class Player:
         return (f"{self.__class__.__name__} (name='{self._player_name}', "
                 f"uid='{self._player_id}', score={self._score})")
 
+    def __lt__(self, other):
+        """return True when player's score is lower than others."""
+        return self._score < other._score
+
+    def __eq__(self, other):
+        """return True when player has the same uid."""
+        return self._player_id == other.uid
+
     @property
     def uid(self):
         return self._player_id
