@@ -2,10 +2,16 @@ import hashlib
 
 
 class Player:
-    def __init__(self, player_id, player_name):
-        """Player unique id"""
+    def __init__(self, player_id, player_name, score=0):
+        """
+        Create player
+        :param player_id: unique id
+        :param player_name: player name
+        :param score: score of the player, 0 when it's not given
+        """
         self._player_id = player_id
         self._player_name = player_name
+        self._score = score
 
     @classmethod
     def sha256_hash(cls, key):
@@ -32,6 +38,10 @@ class Player:
         """Return the unique id of the player"""
         return f"{self._player_id} {self._player_name}"
 
+    def __repr__(self):
+        """return description of player used"""
+        return (f"{self.__class__.__name__} (name='{self._player_name}', "
+                f"uid='{self._player_id}', score={self._score})")
 
     @property
     def uid(self):
@@ -41,7 +51,21 @@ class Player:
     def name(self):
         return self._player_name
 
+    @property
+    def score(self):
+        return self._score
+
     @name.setter
     def name(self, player_name):
         """set a new name. Used when the hash map update a player."""
         self._player_name = player_name
+
+    @score.setter
+    def score(self, value):
+        """set a new score.
+        :param value: positive whole number
+        :raises ValueError: when the value isn't positive
+        """
+        if value <= 0:
+            raise ValueError("score must be a positive value")
+        self._score = value
