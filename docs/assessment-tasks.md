@@ -230,10 +230,10 @@ Add the necessary code to the Player class to ensure that the `test_sort_players
 
 #### 4.3.5. Success criteria
 
-- [ ] Correct explanation of why `test_sort_players` failed/passed
-- [ ] Correct implementation of the magic method in the `Player` class
-- [ ] `test_sort_players` passes when run against the submitted code
-- [ ] At least one commit capturing the above changes
+- [x] Correct explanation of why `test_sort_players` failed/passed
+- [x] Correct implementation of the magic method in the `Player` class
+- [x] `test_sort_players` passes when run against the submitted code
+- [x] At least one commit capturing the above changes
 
 ## 5. Implement a custom sorting algorithm
 
@@ -266,7 +266,15 @@ def sort_quickly(arr):
 
 What is the expected time and space complexity of the above algorithm? You can answer using big O or in plain English but in both cases you MUST justify your answer.
 
-> Answer here
+> Time: O(n log n) on average, O(n²) in the worst case.
+> Each call checks every element once, so that is n comparisons.
+> If the pivot is near the middle, the list is cut in half each time and there are about log n levels.
+> If the pivot is always the smallest or largest value, one side keeps n-1 elements so there are n levels.
+> 
+> Space: O(n log n) on average, O(n²) in the worst case
+> The algorithm does not sort in place. Every call makes two new lists,
+> so each level needs room for another n elements and the levels add up.
+> The recursion also uses stack space for each level.
 
 ### 5.2. Task: Implement the custom sorting algorithm
 
@@ -282,15 +290,24 @@ Include your code below:
 
 ```python
 # YOUR CUSTOM Sorting here
+    def test_sort_by_score(self):
+        players = [Player(player_id='01', player_name="Alice", score=10),
+                   Player(player_id='02', player_name="Bob", score=5),
+                   Player(player_id='03', player_name="Charlie", score=15)]
+
+        result = Player.sort_by_score(players)
+
+        self.assertEqual([15, 10, 5], [player.score for player in result])
+
 ```
 
 #### 5.2.3. Success criteria
 
-- [ ] Custom sorting algorithm implemented in the `Player` class as `classmethod`
-- [ ] Custom sorting algorithm sorts in descending order
-- [ ] Custom sorting algorithm compares players using their score (via the rich comparison operators)
-- [ ] Custom sorting algorithm tested in `test_player.py` and tests passed
-- [ ] At least one commit capturing the above changes
+- [x] Custom sorting algorithm implemented in the `Player` class as `classmethod`
+- [x] Custom sorting algorithm sorts in descending order
+- [x] Custom sorting algorithm compares players using their score (via the rich comparison operators)
+- [x] Custom sorting algorithm tested in `test_player.py` and tests passed
+- [x] At least one commit capturing the above changes
 
 ### 5.3. Test your custom sorting algorithm at scale
 

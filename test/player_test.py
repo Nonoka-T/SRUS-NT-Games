@@ -35,6 +35,15 @@ class PlayerTest(unittest.TestCase):
 
         self.assertGreater(alice, bob)
 
+    def test_sort_by_score(self):
+        players = [Player(player_id='01', player_name="Alice", score=10),
+                   Player(player_id='02', player_name="Bob", score=5),
+                   Player(player_id='03', player_name="Charlie", score=15)]
+
+        result = Player.sort_by_score(players)
+
+        self.assertEqual([15, 10, 5], [player.score for player in result])
+
 
 
 if __name__ == "__main__":

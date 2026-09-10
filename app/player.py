@@ -26,6 +26,23 @@ class Player:
         digest = hashlib.sha256(key.encode()).hexdigest()
         return int(digest, 16)
 
+    @classmethod
+    def sort_by_score(cls, players):
+        """Return a new list of players sorted by score, highest first"""
+        if len(players) <= 1:
+            return players
+
+        pivot = players[0]
+        higher = []
+        lower = []
+        for player in players[1:]:
+            if player > pivot:
+                higher.append(player)
+            else:
+                lower.append(player)
+
+        return cls.sort_by_score(higher) + [pivot] + cls.sort_by_score(lower)
+
     def __hash__(self):
         """
         Return the hash of this player, calculated from uid.
