@@ -1,3 +1,4 @@
+import random
 import unittest
 from app.player import Player
 
@@ -43,6 +44,18 @@ class PlayerTest(unittest.TestCase):
         result = Player.sort_by_score(players)
 
         self.assertEqual([15, 10, 5], [player.score for player in result])
+
+    def test_sort_by_score_one_thousand_player(self):
+        players = [Player(player_id=f"{i:03}",
+                   player_name=f"Player {i}",
+                   score=random.randint(1, 1000))
+                   for i in range(1000)]
+
+        result = Player.sort_by_score(players)
+        expected = sorted(players, reverse=True)
+
+        self.assertEqual([player.score for player in expected],
+                         [player.score for player in result])
 
 
 
