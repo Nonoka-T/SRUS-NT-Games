@@ -363,6 +363,33 @@ If you get a failure, include the failure below:
 
 ```text
 YOUR FAILURE HERE
+(.venv) (base) MacBook-Pro-5:SRUS-NT-Games nonokatakahashi$ python3 -m unittest test.player_test
+....E..
+======================================================================
+ERROR: test_sort_by_score_one_thousand_sorted_player (test.player_test.PlayerTest.test_sort_by_score_one_thousand_sorted_player)                                                                                                
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nonokatakahashi/PycharmProjects/SRUS-NT-Games/test/player_test.py", line 66, in test_sort_by_score_one_thousand_sorted_player                                                                                    
+    result = Player.sort_by_score(players)
+  File "/Users/nonokatakahashi/PycharmProjects/SRUS-NT-Games/app/player.py", line 44, in sort_by_score
+    return cls.sort_by_score(higher) + [pivot] + cls.sort_by_score(lower)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/nonokatakahashi/PycharmProjects/SRUS-NT-Games/app/player.py", line 44, in sort_by_score
+    return cls.sort_by_score(higher) + [pivot] + cls.sort_by_score(lower)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/nonokatakahashi/PycharmProjects/SRUS-NT-Games/app/player.py", line 44, in sort_by_score
+    return cls.sort_by_score(higher) + [pivot] + cls.sort_by_score(lower)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^
+  [Previous line repeated 980 more times]
+  File "/Users/nonokatakahashi/PycharmProjects/SRUS-NT-Games/app/player.py", line 39, in sort_by_score
+    if player > pivot:
+       ^^^^^^^^^^^^^^
+RecursionError: maximum recursion depth exceeded
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.079s
+
+FAILED (errors=1)
 ```
 
 ##### 5.3.4.1 Question: Why does the algorithm fail on presorted values?
@@ -371,22 +398,49 @@ Provide a reason why this test failed (if you got a recursion errors, you need t
 
 If your implementation did not fail, you must nevertheless explain why the senior developers algorithm has worse space complexity for presorted values.
 
-> Answer here
+> The pivot is always the first player. In a sorted list that player has the lowest score
+> so every other player goes into higher and lower stays empty.
+> Each call removes only one player, so the recursion goes 1000 levels deep and Python stops it with RecursionError.
+> In a random list the pivot is usually near the middle,
+> so the two sides are about equal and the depth is only about 10 levels.
+> A sorted list is therefore the worst case: the time becomes O(n²)
+> and the space grows the same way because every call builds new lists.
 
 Propose a fix to your sorting algorithm that fixes this issue.
 
 ```python
 # YOUR FIX HERE
+@classmethod
+    def sort_by_score(cls, players):
+        """Return a new list of players sorted by score, highest first"""
+        if len(players) <= 1:
+            return players
+
+        middle = len(players) // 2
+        pivot = players[middle]
+        rest = players[:middle] + players[middle + 1:]
+
+        higher = []
+        lower = []
+        for player in rest:
+            if player > pivot:
+                higher.append(player)
+            else:
+                lower.append(player)
+
+        return cls.sort_by_score(higher) + [pivot] + cls.sort_by_score(lower)
+
 # Highlight what the fix was
+take the pivot from the middle of the list instead of the front so already sorted list is still split into two halves.
 ```
 
 #### 5.3.5. Success criteria
 
-- [ ] Test case added to `test_player.py`
-- [ ] Test case passes only when changes above are added
-- [ ] Explanation of why the algorithm fails on presorted values
-- [ ] Fix to the algorithm provided
-- [ ] At least one commit capturing the above changes
+- [x] Test case added to `test_player.py`
+- [x] Test case passes only when changes above are added
+- [x] Explanation of why the algorithm fails on presorted values
+- [x] Fix to the algorithm provided
+- [x] At least one commit capturing the above changes
 
 ## 6. Task: Authenticity of in class work
 

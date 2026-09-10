@@ -57,6 +57,18 @@ class PlayerTest(unittest.TestCase):
         self.assertEqual([player.score for player in expected],
                          [player.score for player in result])
 
+    def test_sort_by_score_one_thousand_sorted_player(self):
+        players = [Player(player_id=f"{i:03}",
+                          player_name=f"Player {i}",
+                          score=i + 1)
+                   for i in range(1000)]
+
+        result = Player.sort_by_score(players)
+        expected = sorted(players, reverse=True)
+
+        self.assertEqual([player.score for player in expected],
+                         [player.score for player in result])
+
 
 
 if __name__ == "__main__":

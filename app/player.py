@@ -32,10 +32,13 @@ class Player:
         if len(players) <= 1:
             return players
 
-        pivot = players[0]
+        middle = len(players) // 2
+        pivot = players[middle]
+        rest = players[:middle] + players[middle + 1:]
+
         higher = []
         lower = []
-        for player in players[1:]:
+        for player in rest:
             if player > pivot:
                 higher.append(player)
             else:
