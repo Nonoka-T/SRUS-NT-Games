@@ -54,5 +54,38 @@ class PlayerBSTInsertTest(unittest.TestCase):
         self.assertIsNone(self.bst.tree.right)
 
 
+class PlayerBSTSearchTest(unittest.TestCase):
+    """tests searching players by name using binary search tree"""
+
+    def setUp(self):
+        """create a tree holding 3 players"""
+        self.bst = PlayerBST()
+        self.nonoka = Player("1", "Nonoka")
+        self.liam = Player("2", "Liam")
+        self.christina = Player("3", "Christina")
+        self.bst.insert(self.liam)
+        self.bst.insert(self.nonoka)
+        self.bst.insert(self.christina)
+
+    def test_search_empty_tree(self):
+        """searching an empty tree returns None"""
+        empty_bst = PlayerBST()
+
+        self.assertIsNone(empty_bst.search("Liam"))
+
+    def test_search_root(self):
+        """root node is returned when the name matches"""
+        self.assertEqual(self.liam, self.bst.search("Liam").player)
+
+    def test_search_left_and_right_subtree(self):
+        """players in the left and right subtree can be found"""
+        self.assertEqual(self.christina, self.bst.search("Christina").player)
+        self.assertEqual(self.nonoka, self.bst.search("Nonoka").player)
+
+    def test_search_unknown_name(self):
+        """searching a name that isn't in the tree returns None"""
+        self.assertIsNone(self.bst.search("Reika"))
+
+
 if __name__ == '__main__':
     unittest.main()

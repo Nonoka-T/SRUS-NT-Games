@@ -39,3 +39,22 @@ class PlayerBST:
             node.right = self._insert(node.right, player)
         #　same name do nothing so no duplicate node is made
         return node
+
+    def search(self, name):
+        """
+        return the node whose key matches name or None when it isn't found.
+        """
+        return self._search(self._tree, name)
+
+    def _search(self, node, name):
+        """search the subtree starting at node for the given name"""
+        # reached the end of tree or found the name
+        if node is None or node.player.name == name:
+            return node
+
+        # name is smaller so it can only be in the left subtree
+        if name < node.player.name:
+            return self._search(node.left, name)
+
+        # name is greater so can only be in the right subtree
+        return self._search(node.right, name)
